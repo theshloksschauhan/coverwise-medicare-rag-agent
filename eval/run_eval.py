@@ -39,15 +39,35 @@ def retrieval_metrics(rows, k=5):
     return out
 
 
-def agent_metrics(coverage_rows):
+def _invoke_with_backoff(agent, payload, pause_s, attempts=6):
+    """Free-tier APIs rate-limit (429/503). Wait and retry; latency counts only the successful attempt."""
+    from coverwise.llm import LLMUnavailableError
+
+    for attempt in range(attempts):
+        try:
+            t = time.perf_counter()
+            state = agent.invoke(payload)
+            return state, time.perf_counter() - t
+        except LLMUnavailableError as err:
+            if attempt == attempts - 1 or not any(code in str(err) for code in ("429", "503")):
+                raise
+            wait = 20 * (attempt + 1)
+            print(f"  rate limited ({err}); waiting {wait}s", file=sys.stderr)
+            time.sleep(wait)
+        finally:
+            time.sleep(pause_s)
+    raise AssertionError("unreachable")
+
+
+def agent_metrics(coverage_rows, pause_s=0.0):
     from coverwise.api import get_agent
 
     agent = get_agent()
     latencies, cited, correct_doc, review = [], 0, 0, 0
     for i, row in enumerate(coverage_rows):
-        t = time.perf_counter()
-        state = agent.invoke({"request_id": f"eval-{i}", "question": row["question"]})
-        latencies.append(time.perf_counter() - t)
+        state, seconds = _invoke_with_backoff(agent, {"request_id": f"eval-{i}", "question": row["question"]}, pause_s)
+        latencies.append(seconds)
+        print(f"  [{i + 1}/{len(coverage_rows)}] {seconds:.1f}s citations={state['citations']}", file=sys.stderr)
         cited += bool(state["citations"])
         correct_doc += row["expected_doc"] in {doc_of(c) for c in state["citations"]}
         review += state["needs_review"]
@@ -61,6 +81,7 @@ def agent_metrics(coverage_rows):
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--with-llm", action="store_true")
+    parser.add_argument("--pause", type=float, default=0.0, help="seconds between LLM questions (free-tier limits)")
     args = parser.parse_args()
 
     rows = [json.loads(line) for line in (HERE / "golden.jsonl").read_text(encoding="utf-8").splitlines() if line]
@@ -74,7 +95,7 @@ def main() -> int:
         "guardrails": {"intent_accuracy": round(intent_ok / len(rows), 3)},
     }
     if args.with_llm:
-        results["agent"] = agent_metrics(coverage)
+        results["agent"] = agent_metrics(coverage, args.pause)
 
     checks = {"hybrid_recall@5": results["retrieval"]["hybrid"]["recall@5"],
               "intent_accuracy": results["guardrails"]["intent_accuracy"]}

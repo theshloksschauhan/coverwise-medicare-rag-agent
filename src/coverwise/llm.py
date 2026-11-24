@@ -14,6 +14,7 @@ class ToolCall:
     id: str
     name: str
     arguments: str  # JSON string
+    extra: dict | None = None  # provider fields to echo back, e.g. Gemini 3 thought signatures
 
 
 @dataclass
@@ -50,7 +51,11 @@ class OpenAICompatibleChat:
         usage = resp.usage
         return LLMReply(
             content=msg.content or "",
-            tool_calls=[ToolCall(tc.id, tc.function.name, tc.function.arguments or "{}") for tc in (msg.tool_calls or [])],
+            tool_calls=[
+                ToolCall(tc.id, tc.function.name, tc.function.arguments or "{}",
+                         (tc.model_extra or {}).get("extra_content"))
+                for tc in (msg.tool_calls or [])
+            ],
             tokens_in=getattr(usage, "prompt_tokens", 0) or 0,
             tokens_out=getattr(usage, "completion_tokens", 0) or 0,
         )

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T11:33:23+00:00",
+  "generated_at": "2026-11-24T13:30:36+00:00",
   "golden_questions": 30,
   "retrieval": {
     "bm25": {
@@ -20,6 +20,13 @@
   },
   "guardrails": {
     "intent_accuracy": 1.0
+  },
+  "agent": {
+    "citation_rate": 1.0,
+    "cited_expected_doc": 1.0,
+    "needs_review_rate": 0.0,
+    "latency_p50_s": 1.93,
+    "latency_p95_s": 10.09
   },
   "gates": {
     "hybrid_recall@5": {

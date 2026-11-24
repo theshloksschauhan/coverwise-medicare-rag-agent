@@ -9,3 +9,4 @@ data/index/
 clients/dotnet/**/bin/
 clients/dotnet/**/obj/
 *.egg-info/
+eval/llm_run.log

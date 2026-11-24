@@ -48,7 +48,20 @@ flowchart LR
 
 **What this shows:** on paraphrased questions, embeddings beat keywords, and hybrid search keeps recall@5 at 1.0. Vector-only is slightly better at rank 1 on this set. Hybrid stays the default because BM25 protects exact-term queries (procedure names, plan parts) that embeddings can miss. CI **fails the build** if hybrid recall@5 drops below 0.90 or intent accuracy below 0.90.
 
-**Limits:** the golden set is small and written by the author, and the guardrail is rule-based, so 1.00 is likely optimistic on real traffic. `python eval/run_eval.py --with-llm` also measures citation rate, cited-correct-document rate, review rate and latency with a live model.
+**End-to-end agent with a live LLM** (`python eval/run_eval.py --with-llm --pause 5`, Gemini `gemini-flash-lite-latest`, 20 coverage Qs):
+
+| Metric | Value |
+|---|---|
+| Answers with at least one valid citation | 1.00 |
+| Answers citing the expected Medicare.gov page | 1.00 |
+| Sent to human review | 0.00 |
+| Latency p50 / p95 | 1.9 s / 10.1 s |
+
+The p95 tail comes from questions where the model made extra tool calls before answering.
+
+**Limits:** the golden set is small and written by the author, and the guardrail is rule-based, so 1.00 is likely optimistic on real traffic. A 0% review rate on 20 in-scope questions also means the confidence threshold hasn't been tested against hard out-of-corpus questions yet.
+
+**Provider notes:** Gemini 3 models reject a tool-result turn unless the tool call's `thought_signature` is echoed back, so the client preserves provider `extra_content` on tool calls. Free-tier daily quotas are small (20 requests/day/model on some models), so the eval paces requests and retries on 429/503, timing only the successful attempt.
 
 ## Responsible AI
 

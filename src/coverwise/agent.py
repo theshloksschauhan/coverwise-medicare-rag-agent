@@ -89,7 +89,8 @@ def build_agent(retriever: Retriever, llm: ChatModel, cfg: Settings = settings):
         msg = {"role": "assistant", "content": reply.content}
         if reply.tool_calls:
             msg["tool_calls"] = [
-                {"id": tc.id, "type": "function", "function": {"name": tc.name, "arguments": tc.arguments}}
+                {"id": tc.id, "type": "function", "function": {"name": tc.name, "arguments": tc.arguments},
+                 **({"extra_content": tc.extra} if tc.extra else {})}
                 for tc in reply.tool_calls
             ]
         return {

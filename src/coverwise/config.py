@@ -1,4 +1,4 @@
-"""Runtime settings, all overridable through environment variables."""
+﻿"""Runtime settings, all overridable through environment variables."""
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -23,7 +23,7 @@ class Settings:
     min_confidence: float = float(_env("COVERWISE_MIN_CONFIDENCE", "0.72"))
     # OpenAI-compatible chat endpoint. Defaults to Gemini's free tier.
     llm_base_url: str = _env("LLM_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/")
-    llm_model: str = _env("LLM_MODEL", "gemini-2.0-flash")
+    llm_model: str = _env("LLM_MODEL", "gemini-flash-lite-latest")
     llm_api_key: str = _env("LLM_API_KEY", _env("GEMINI_API_KEY", ""))
     # Rough USD per 1M tokens, used only for cost logging.
     price_in_per_m: float = float(_env("LLM_PRICE_IN_PER_M", "0.10"))
