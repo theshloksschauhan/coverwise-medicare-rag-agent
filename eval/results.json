@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-11-24T11:33:23+00:00",
+  "golden_questions": 30,
+  "retrieval": {
+    "bm25": {
+      "recall@1": 0.9,
+      "recall@5": 0.9,
+      "mrr": 0.9
+    },
+    "vector": {
+      "recall@1": 0.95,
+      "recall@5": 1.0,
+      "mrr": 0.967
+    },
+    "hybrid": {
+      "recall@1": 0.9,
+      "recall@5": 1.0,
+      "mrr": 0.927
+    }
+  },
+  "guardrails": {
+    "intent_accuracy": 1.0
+  },
+  "gates": {
+    "hybrid_recall@5": {
+      "value": 1.0,
+      "min": 0.9,
+      "pass": true
+    },
+    "intent_accuracy": {
+      "value": 1.0,
+      "min": 0.9,
+      "pass": true
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+data/index/
+.fastembed/
+.env
+clients/dotnet/**/bin/
+clients/dotnet/**/obj/

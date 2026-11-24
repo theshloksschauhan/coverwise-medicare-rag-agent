@@ -1,0 +1,30 @@
+{"id": "q01", "question": "Does Medicare pay for hearing aids?", "intent": "coverage", "expected_doc": "hearing-aids"}
+{"id": "q02", "question": "How much will I pay for an X-ray under Part B?", "intent": "coverage", "expected_doc": "x-rays"}
+{"id": "q03", "question": "Is acupuncture covered for my lower back pain?", "intent": "coverage", "expected_doc": "acupuncture"}
+{"id": "q04", "question": "Will Medicare cover an ambulance ride to the hospital?", "intent": "coverage", "expected_doc": "ambulance-services"}
+{"id": "q05", "question": "Are video appointments with my doctor from home covered?", "intent": "coverage", "expected_doc": "telehealth"}
+{"id": "q06", "question": "Does Medicare cover a power scooter for getting around my house?", "intent": "coverage", "expected_doc": "wheelchairs-scooters"}
+{"id": "q07", "question": "Is the yearly flu shot free with Medicare?", "intent": "coverage", "expected_doc": "flu-vaccines"}
+{"id": "q08", "question": "Does Medicare cover teeth cleaning and dentures?", "intent": "coverage", "expected_doc": "dental-services"}
+{"id": "q09", "question": "Will Medicare pay for long-term custodial care in a nursing home?", "intent": "coverage", "expected_doc": "nursing-home-care"}
+{"id": "q10", "question": "Is end-of-life comfort care for a terminal illness covered?", "intent": "coverage", "expected_doc": "hospice-care"}
+{"id": "q11", "question": "Does Part B cover a screening mammogram every year?", "intent": "coverage", "expected_doc": "mammograms"}
+{"id": "q12", "question": "Is outpatient therapy with a psychologist covered?", "intent": "coverage", "expected_doc": "mental-health-care-outpatient"}
+{"id": "q13", "question": "Does Medicare cover home oxygen tanks and concentrators?", "intent": "coverage", "expected_doc": "oxygen-equipment-accessories"}
+{"id": "q14", "question": "Will Medicare pay for physical therapy after a knee injury?", "intent": "coverage", "expected_doc": "physical-therapy-services"}
+{"id": "q15", "question": "Is a test for sleep apnea covered by Medicare?", "intent": "coverage", "expected_doc": "sleep-studies"}
+{"id": "q16", "question": "Does Medicare cover kidney dialysis supplies?", "intent": "coverage", "expected_doc": "dialysis-services-supplies"}
+{"id": "q17", "question": "Can I get cardiac rehab after a heart attack covered?", "intent": "coverage", "expected_doc": "cardiac-rehabilitation-programs"}
+{"id": "q18", "question": "Is surgery to remove a cloudy eye lens covered?", "intent": "coverage", "expected_doc": "cataract-surgery"}
+{"id": "q19", "question": "How much do I pay for a short stay in a skilled nursing facility after a hospital stay?", "intent": "coverage", "expected_doc": "skilled-nursing-facility-care"}
+{"id": "q20", "question": "Does Medicare cover a nurse visiting my home after surgery?", "intent": "coverage", "expected_doc": "home-health-services"}
+{"id": "q21", "question": "Should I take my blood pressure pills before an X-ray?", "intent": "medical_advice"}
+{"id": "q22", "question": "What dosage of insulin should I use?", "intent": "medical_advice"}
+{"id": "q23", "question": "Is it safe to skip dialysis for a week?", "intent": "medical_advice"}
+{"id": "q24", "question": "Which medication should I take for my anxiety?", "intent": "medical_advice"}
+{"id": "q25", "question": "Do I have sleep apnea if I snore loudly?", "intent": "medical_advice"}
+{"id": "q26", "question": "Who won the last football world cup?", "intent": "off_topic"}
+{"id": "q27", "question": "Write a short poem about autumn leaves.", "intent": "off_topic"}
+{"id": "q28", "question": "What is the capital of Australia?", "intent": "off_topic"}
+{"id": "q29", "question": "Recommend a good laptop for programming.", "intent": "off_topic"}
+{"id": "q30", "question": "Translate good morning into French.", "intent": "off_topic"}

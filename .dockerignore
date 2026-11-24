@@ -1,0 +1,7 @@
+.venv
+.git
+data/index
+**/__pycache__
+.pytest_cache
+clients/dotnet/**/bin
+clients/dotnet/**/obj

@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: coverwise
+Version: 0.1.0
+Summary: Cited, guard-railed Medicare coverage Q&A agent (RAG + LangGraph)
+Requires-Python: >=3.11
+Requires-Dist: fastapi>=0.115
+Requires-Dist: uvicorn[standard]>=0.30
+Requires-Dist: pydantic>=2.7
+Requires-Dist: langgraph>=0.2
+Requires-Dist: chromadb>=0.5
+Requires-Dist: fastembed>=0.3
+Requires-Dist: rank-bm25>=0.2.2
+Requires-Dist: openai>=1.40
+Requires-Dist: prometheus-client>=0.20
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: httpx>=0.27; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+Requires-Dist: beautifulsoup4>=4.12; extra == "dev"

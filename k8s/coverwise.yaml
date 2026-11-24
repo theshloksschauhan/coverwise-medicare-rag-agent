@@ -1,0 +1,61 @@
+# Kubernetes deployment: works on any cluster (GKE, AKS, EKS, kind).
+# Create the API key secret first:
+#   kubectl create secret generic coverwise-llm --from-literal=LLM_API_KEY=<key>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coverwise
+  labels: {app: coverwise}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: coverwise}
+  template:
+    metadata:
+      labels: {app: coverwise}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: /metrics
+    spec:
+      securityContext: {runAsNonRoot: true, runAsUser: 10001}
+      containers:
+        - name: api
+          image: coverwise:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - name: LLM_API_KEY
+              valueFrom: {secretKeyRef: {name: coverwise-llm, key: LLM_API_KEY, optional: true}}
+          resources:
+            requests: {cpu: 250m, memory: 768Mi}
+            limits: {cpu: "1", memory: 1536Mi}
+          readinessProbe:
+            httpGet: {path: /readyz, port: 8080}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: {path: /healthz, port: 8080}
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: false}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coverwise
+spec:
+  selector: {app: coverwise}
+  ports: [{port: 80, targetPort: 8080}]
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: coverwise
+spec:
+  scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: coverwise}
+  minReplicas: 2
+  maxReplicas: 6
+  metrics:
+    - type: Resource
+      resource: {name: cpu, target: {type: Utilization, averageUtilization: 70}}
