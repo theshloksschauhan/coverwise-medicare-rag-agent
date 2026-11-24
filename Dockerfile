@@ -2,7 +2,8 @@
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 \
-    FASTEMBED_CACHE_PATH=/app/models PORT=8080 \n    COVERWISE_RAW_DIR=/app/data/raw COVERWISE_INDEX_DIR=/app/data/index
+    FASTEMBED_CACHE_PATH=/app/models PORT=8080 \
+    COVERWISE_RAW_DIR=/app/data/raw COVERWISE_INDEX_DIR=/app/data/index
 WORKDIR /app
 
 COPY pyproject.toml ./
