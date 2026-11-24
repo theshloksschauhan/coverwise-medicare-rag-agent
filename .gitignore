@@ -8,3 +8,4 @@ data/index/
 .env
 clients/dotnet/**/bin/
 clients/dotnet/**/obj/
+*.egg-info/
