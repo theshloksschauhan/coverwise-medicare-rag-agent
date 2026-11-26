@@ -4,7 +4,7 @@ import uuid
 from functools import lru_cache
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import Response
+from fastapi.responses import RedirectResponse, Response
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from coverwise import observability as obs
@@ -26,6 +26,11 @@ log = obs.get_logger()
 @lru_cache(maxsize=1)
 def get_agent():
     return build_agent(get_retriever(), OpenAICompatibleChat())
+
+
+@app.get("/", include_in_schema=False)
+def root() -> RedirectResponse:
+    return RedirectResponse("/docs")
 
 
 @app.get("/healthz", tags=["ops"])
