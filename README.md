@@ -36,7 +36,7 @@ flowchart LR
 
 ## Evaluation
 
-`eval/golden.jsonl` has 38 hand-written questions: 28 coverage questions (mostly paraphrased, e.g. *"cloudy eye lens"* for cataracts), 5 medical-advice and 5 off-topic. Results from `python eval/run_eval.py` on 41 documents / 126 chunks:
+`eval/golden.jsonl` has 38 hand-written questions: 28 coverage questions (mostly paraphrased, e.g. *"cloudy eye lens"* for cataracts), 5 medical-advice and 5 off-topic. Results from `python eval/run_eval.py` on 43 documents / 126 chunks:
 
 | Retrieval (28 coverage Qs) | recall@1 | recall@5 | MRR |
 |---|---|---|---|
