@@ -1,32 +1,25 @@
 {
-  "generated_at": "2026-11-24T13:30:36+00:00",
-  "golden_questions": 30,
+  "generated_at": "2026-11-26T20:45:49+00:00",
+  "golden_questions": 38,
   "retrieval": {
     "bm25": {
-      "recall@1": 0.9,
-      "recall@5": 0.9,
-      "mrr": 0.9
+      "recall@1": 0.75,
+      "recall@5": 0.821,
+      "mrr": 0.78
     },
     "vector": {
-      "recall@1": 0.95,
+      "recall@1": 0.929,
       "recall@5": 1.0,
-      "mrr": 0.967
+      "mrr": 0.958
     },
     "hybrid": {
-      "recall@1": 0.9,
+      "recall@1": 0.893,
       "recall@5": 1.0,
-      "mrr": 0.927
+      "mrr": 0.926
     }
   },
   "guardrails": {
     "intent_accuracy": 1.0
-  },
-  "agent": {
-    "citation_rate": 1.0,
-    "cited_expected_doc": 1.0,
-    "needs_review_rate": 0.0,
-    "latency_p50_s": 1.93,
-    "latency_p95_s": 10.09
   },
   "gates": {
     "hybrid_recall@5": {

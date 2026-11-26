@@ -34,21 +34,21 @@ flowchart LR
 
 ## Evaluation
 
-`eval/golden.jsonl` has 30 hand-written questions: 20 coverage questions (mostly paraphrased, e.g. *"cloudy eye lens"* for cataracts), 5 medical-advice and 5 off-topic. Results from `python eval/run_eval.py` on 26 documents / 84 chunks:
+`eval/golden.jsonl` has 38 hand-written questions: 28 coverage questions (mostly paraphrased, e.g. *"cloudy eye lens"* for cataracts), 5 medical-advice and 5 off-topic. Results from `python eval/run_eval.py` on 41 documents / 126 chunks:
 
-| Retrieval (20 coverage Qs) | recall@1 | recall@5 | MRR |
+| Retrieval (28 coverage Qs) | recall@1 | recall@5 | MRR |
 |---|---|---|---|
-| BM25 only | 0.90 | 0.90 | 0.90 |
-| Vector only | **0.95** | **1.00** | **0.967** |
-| Hybrid (RRF) | 0.90 | **1.00** | 0.927 |
+| BM25 only | 0.75 | 0.82 | 0.78 |
+| Vector only | **0.93** | **1.00** | **0.958** |
+| Hybrid (RRF) | 0.89 | **1.00** | 0.926 |
 
-| Guardrails (30 Qs) | |
+| Guardrails (38 Qs) | |
 |---|---|
 | Intent accuracy | 1.00 |
 
 **What this shows:** on paraphrased questions, embeddings beat keywords, and hybrid search keeps recall@5 at 1.0. Vector-only is slightly better at rank 1 on this set. Hybrid stays the default because BM25 protects exact-term queries (procedure names, plan parts) that embeddings can miss. CI **fails the build** if hybrid recall@5 drops below 0.90 or intent accuracy below 0.90.
 
-**End-to-end agent with a live LLM** (`python eval/run_eval.py --with-llm --pause 5`, Gemini `gemini-flash-lite-latest`, 20 coverage Qs):
+**End-to-end agent with a live LLM** (`python eval/run_eval.py --with-llm --pause 5`, Gemini `gemini-flash-lite-latest`, the original 20 coverage Qs on the 26-document corpus):
 
 | Metric | Value |
 |---|---|

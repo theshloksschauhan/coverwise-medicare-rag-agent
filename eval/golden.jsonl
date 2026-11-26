@@ -28,3 +28,11 @@
 {"id": "q28", "question": "What is the capital of Australia?", "intent": "off_topic"}
 {"id": "q29", "question": "Recommend a good laptop for programming.", "intent": "off_topic"}
 {"id": "q30", "question": "Translate good morning into French.", "intent": "off_topic"}
+{"id": "q31", "question": "Will Medicare help pay for a breathing machine for my sleep apnea?", "intent": "coverage", "expected_doc": "cpap-therapy"}
+{"id": "q32", "question": "Can I get a rollator through Part B?", "intent": "coverage", "expected_doc": "walkers"}
+{"id": "q33", "question": "Does Medicare cover an adjustable bed for use at home?", "intent": "coverage", "expected_doc": "hospital-beds"}
+{"id": "q34", "question": "Is a sensor that tracks my glucose all day covered?", "intent": "coverage", "expected_doc": "continuous-glucose-monitors"}
+{"id": "q35", "question": "Do I pay anything for the shingles shot?", "intent": "coverage", "expected_doc": "shingles-vaccines"}
+{"id": "q36", "question": "Does Medicare pay for screening for colon cancer?", "intent": "coverage", "expected_doc": "colonoscopies"}
+{"id": "q37", "question": "Will Medicare pay for a new pair of glasses?", "intent": "coverage", "expected_doc": "eyeglasses-contact-lenses"}
+{"id": "q38", "question": "Is an artificial leg covered after an amputation?", "intent": "coverage", "expected_doc": "prosthetic-devices"}
