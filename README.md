@@ -4,7 +4,9 @@ A Medicare coverage Q&A agent. You ask *"Does Medicare cover hearing aids?"* and
 
 > Not medical or legal advice. An educational project using public Medicare.gov content.
 
-**Stack:** Python · FastAPI · LangGraph · ChromaDB · fastembed (BGE-small embeddings) · BM25 · Pydantic · Prometheus · Docker · Kubernetes · GitHub Actions · Google Cloud Run · .NET 8 + Semantic Kernel
+**Live demo:** https://coverwise-medicare-rag-agent.onrender.com/docs (interactive API: try `POST /ask`). Hosted on Render's free tier, so the first request after idle takes ~30–60 s to wake up.
+
+**Stack:** Python · FastAPI · LangGraph · ChromaDB · fastembed (BGE-small embeddings) · BM25 · Pydantic · Prometheus · Docker · Kubernetes · GitHub Actions · Render · .NET 8 + Semantic Kernel
 
 ## Architecture
 
@@ -93,7 +95,8 @@ Any OpenAI-compatible model works: set `LLM_BASE_URL`, `LLM_MODEL` and `LLM_API_
 
 - **Docker:** `docker build -t coverwise . && docker run -p 8080:8080 -e LLM_API_KEY=... coverwise`. The index and embedding model are baked into the image.
 - **Kubernetes:** `k8s/coverwise.yaml` defines a Deployment (2 replicas, readiness/liveness probes, non-root), a Service and a HorizontalPodAutoscaler. CI deploys it to a **kind** cluster and smoke-tests it.
-- **Google Cloud Run:** `.github/workflows/deploy-cloudrun.yml` builds, pushes to Artifact Registry and deploys after CI passes on `main`, with the LLM key from **Secret Manager**. Setup: set repo variables `GCP_PROJECT_ID`, `GCP_REGION` and secret `GCP_SA_KEY`, and create the `coverwise` Artifact Registry repo and `coverwise-llm-key` secret.
+- **Render (live):** the same Dockerfile runs as a Render web service built from this repo, with `GEMINI_API_KEY` set as an environment variable. Render redeploys on every push to `main`.
+- **Google Cloud Run (workflow ready, not deployed):** `.github/workflows/deploy-cloudrun.yml` builds, pushes to Artifact Registry and deploys after CI passes on `main`, with the LLM key from **Secret Manager**. Setup: set repo variables `GCP_PROJECT_ID`, `GCP_REGION` and secret `GCP_SA_KEY`, and create the `coverwise` Artifact Registry repo and `coverwise-llm-key` secret.
 
 ## .NET integration (Semantic Kernel)
 
