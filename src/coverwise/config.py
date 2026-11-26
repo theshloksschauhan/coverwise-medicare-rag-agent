@@ -21,10 +21,11 @@ class Settings:
     top_k: int = int(_env("COVERWISE_TOP_K", "5"))
     # Below this best cosine similarity, the answer is flagged for human review.
     min_confidence: float = float(_env("COVERWISE_MIN_CONFIDENCE", "0.72"))
-    # OpenAI-compatible chat endpoint. Defaults to Gemini's free tier.
-    llm_base_url: str = _env("LLM_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/")
-    llm_model: str = _env("LLM_MODEL", "gemini-flash-lite-latest")
-    llm_api_key: str = _env("LLM_API_KEY", _env("GEMINI_API_KEY", ""))
+    # OpenAI-compatible chat endpoint. Defaults to Groq; any compatible provider works via these vars.
+    # The key is never stored here: set LLM_API_KEY (or GROQ_API_KEY) in the environment.
+    llm_base_url: str = _env("LLM_BASE_URL", "https://api.groq.com/openai/v1")
+    llm_model: str = _env("LLM_MODEL", "openai/gpt-oss-20b")
+    llm_api_key: str = _env("LLM_API_KEY", _env("GROQ_API_KEY", _env("GEMINI_API_KEY", "")))
     # Rough USD per 1M tokens, used only for cost logging.
     price_in_per_m: float = float(_env("LLM_PRICE_IN_PER_M", "0.10"))
     price_out_per_m: float = float(_env("LLM_PRICE_OUT_PER_M", "0.40"))

@@ -40,7 +40,7 @@ class OpenAICompatibleChat:
 
     def chat(self, messages: list[dict], tools: list[dict] | None = None) -> LLMReply:
         if self.client is None:
-            raise LLMUnavailableError("Set LLM_API_KEY (or GEMINI_API_KEY) to enable answers.")
+            raise LLMUnavailableError("Set LLM_API_KEY (or GROQ_API_KEY) to enable answers.")
         try:
             resp = self.client.chat.completions.create(
                 model=self.cfg.llm_model, messages=messages, tools=tools or None, temperature=0.1,

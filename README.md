@@ -84,7 +84,7 @@ python -m venv .venv && .venv/Scripts/activate        # Linux/macOS: source .ven
 pip install -e ".[dev]"
 python scripts/fetch_data.py        # optional: refresh data/raw from Medicare.gov
 python -m coverwise.ingest          # build ChromaDB + BM25 indexes
-export LLM_API_KEY=<free Gemini API key>   # optional; refusals work without it
+export LLM_API_KEY=<Groq API key>   # optional; refusals work without it
 uvicorn coverwise.api:app --port 8080      # open http://localhost:8080/docs
 pytest -q && python eval/run_eval.py
 ```
