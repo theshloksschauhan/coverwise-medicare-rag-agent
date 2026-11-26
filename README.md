@@ -50,18 +50,18 @@ flowchart LR
 
 **What this shows:** on paraphrased questions, embeddings beat keywords, and hybrid search keeps recall@5 at 1.0. Vector-only is slightly better at rank 1 on this set. Hybrid stays the default because BM25 protects exact-term queries (procedure names, plan parts) that embeddings can miss. CI **fails the build** if hybrid recall@5 drops below 0.90 or intent accuracy below 0.90.
 
-**End-to-end agent with a live LLM** (`python eval/run_eval.py --with-llm --pause 5`, Gemini `gemini-flash-lite-latest`, the original 20 coverage Qs on the 26-document corpus):
+**End-to-end agent with a live LLM** (`python eval/run_eval.py --with-llm --pause 3`, Groq `openai/gpt-oss-20b` free tier, all 28 coverage Qs on the 43-document corpus, run 2026-11-27):
 
 | Metric | Value |
 |---|---|
-| Answers with at least one valid citation | 1.00 |
-| Answers citing the expected Medicare.gov page | 1.00 |
-| Sent to human review | 0.00 |
-| Latency p50 / p95 | 1.9 s / 10.1 s |
+| Answers with at least one valid citation | 1.00 (28/28) |
+| Answers citing the expected Medicare.gov page | 1.00 (28/28) |
+| Sent to human review | 0.07 (2/28) |
+| Latency p50 / p95 | 8.7 s / 28.7 s |
 
-The p95 tail comes from questions where the model made extra tool calls before answering.
+Latency is measured on Groq's free tier: it counts only the successful attempt, but that can include the API client's built-in retries and the model's extra tool calls, so the p95 is not a production latency figure. An earlier run with Gemini `gemini-flash-lite-latest` on the first 26-document corpus (20 Qs) also scored 1.00 / 1.00, at 1.9 s / 10.1 s.
 
-**Limits:** the golden set is small and written by the author, and the guardrail is rule-based, so 1.00 is likely optimistic on real traffic. A 0% review rate on 20 in-scope questions also means the confidence threshold hasn't been tested against hard out-of-corpus questions yet.
+**Limits:** the golden set is small and written by the author, and the guardrail is rule-based, so 1.00 is likely optimistic on real traffic. The 2 review-queue cases show the confidence threshold does trigger, but it hasn't been tested against hard out-of-corpus questions yet.
 
 **Provider notes:** Gemini 3 models reject a tool-result turn unless the tool call's `thought_signature` is echoed back, so the client preserves provider `extra_content` on tool calls. Free-tier daily quotas are small (20 requests/day/model on some models), so the eval paces requests and retries on 429/503, timing only the successful attempt.
 
